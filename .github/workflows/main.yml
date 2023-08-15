@@ -3,6 +3,7 @@ on:
   push: # enabling push event on main branch to fire the workflow
     branches:
       - main
+  workflow_dispatch:
 jobs:
   job1:
     runs-on: ubuntu-latest
