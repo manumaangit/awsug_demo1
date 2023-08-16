@@ -4,7 +4,7 @@ resource "tls_private_key" "terrafrom_generated_private_key" {
 }
 
 resource "aws_security_group" "ssh-sec-grp" {
-  name = "ssh-sec-grp-tf1"
+  name        = "ssh-sec-grp-tf1"
   description = "Allow SSH traffic via Terraform"
 
   ingress {
@@ -25,40 +25,40 @@ resource "aws_security_group" "ssh-sec-grp" {
 
 
 resource "aws_key_pair" "generated_key" {
-  
+
   # Name of key: Write the custom name of your key
-  key_name   = "aws_keys_pairs-tf1"
-  
+  key_name = "aws_keys_pairs-tf1"
+
   # Public Key: The public will be generated using the reference of tls_private_key.terrafrom_generated_private_key
   public_key = tls_private_key.terrafrom_generated_private_key.public_key_openssh
- 
+
   # Store private key :  Generate and save private key(aws_keys_pairs.pem) in current directory 
-  provisioner "local-exec" {   
+  provisioner "local-exec" {
     command = <<-EOT
       echo '${tls_private_key.terrafrom_generated_private_key.private_key_pem}' > aws_keys_pairs.pem
       chmod 400 aws_keys_pairs.pem
     EOT
   }
-} 
+}
 
 
 resource "aws_instance" "ec2_instance" {
-  ami           = "ami-053b0d53c279acc90"  # Change this to the correct Ubuntu 20.04 AMI ID
-  instance_type = "t2.micro"  # Change to the desired instance type
-  key_name      = "aws_keys_pairs-tf1"  # Change to your key pair name
+  ami                    = "ami-053b0d53c279acc90" # Change this to the correct Ubuntu 20.04 AMI ID
+  instance_type          = "t2.micro"              # Change to the desired instance type
+  key_name               = "aws_keys_pairs-tf1"    # Change to your key pair name
   vpc_security_group_ids = [aws_security_group.ssh-sec-grp.id]
   tags = {
     Name = "Ubuntu-Docker-Instance=tf"
   }
-     connection {
-     type        = "ssh"
-     host        = self.public_ip
-     user        = "ubuntu"
-     
-     # Mention the exact private key name which will be generated 
-     private_key = file("aws_keys_pairs.pem")
-     timeout     = "4m"
-   }
+  connection {
+    type = "ssh"
+    host = self.public_ip
+    user = "ubuntu"
+
+    # Mention the exact private key name which will be generated 
+    private_key = file("aws_keys_pairs.pem")
+    timeout     = "4m"
+  }
 
 
   user_data = <<-EOF
