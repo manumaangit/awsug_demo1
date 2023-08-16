@@ -3,6 +3,10 @@ provider "aws" {
   version = "~> 5.0"
 }
 
+provider "terraform" {
+  backend "s3" {}
+}
+
 resource "tls_private_key" "terrafrom_generated_private_key" {
   algorithm = "RSA"
   rsa_bits  = 4096
