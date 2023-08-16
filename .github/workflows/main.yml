@@ -44,7 +44,7 @@ jobs:
         env:
           AWS_BUCKET_NAME: "tf-state-manu16082023"
           AWS_BUCKET_KEY_NAME: "remote-state"
-        run: terraform init -backend-config="bucket=${AWS_BUCKET_NAME}" -backend-config="key=${AWS_BUCKET_KEY_NAME}" -backend-config="region=${AWS_REGION}"
+        run: terraform init -backend-config="bucket=${AWS_BUCKET_NAME}" -backend-config="key=${env.AWS_BUCKET_KEY_NAME}" -backend-config="region=${env.AWS_REGION}"
 
       - name: Terraform Validate
         id: validate
