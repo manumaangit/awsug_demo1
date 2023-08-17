@@ -73,7 +73,6 @@ resource "aws_instance" "ec2_instance" {
     timeout     = "4m"
   }
 
-
   user_data = <<-EOF
               #!/bin/bash
               sudo apt-get update
