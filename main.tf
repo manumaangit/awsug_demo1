@@ -58,7 +58,7 @@ resource "aws_instance" "ec2_instance" {
   instance_type          = "t2.micro"              # Change to the desired instance type
   key_name               = "aws_keys_pairs-tf1"    # Change to your key pair name
   iam_instance_profile   = aws_iam_instance_profile.ec2_profile.name
-  user_data_replace_on_change = true
+  user_data_replace_on_change = false
   vpc_security_group_ids = [aws_security_group.ssh-sec-grp.id]
   tags = {
     Name = "Ubuntu-Docker-Instance=tf"
