@@ -15,6 +15,7 @@ resource "aws_security_group" "ssh-sec-grp" {
   }
 
   ingress {
+    from_port   = 0
     to_port     = 3000
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
