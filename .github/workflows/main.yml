@@ -23,9 +23,7 @@ jobs:
         uses: actions/checkout@v3    
 
       - name: Docker Build
-        run: sudo apt-get update && 
-          sudo apt-get install -y docker.io && 
-          sudo usermod -aG docker ubuntu
+        run: docker -v
   deploy:
     runs-on: ubuntu-latest
     defaults:
