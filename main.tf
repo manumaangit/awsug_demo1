@@ -15,7 +15,7 @@ resource "aws_security_group" "ssh-sec-grp" {
   }
 
   ingress {
-    from_port   = 0
+    from_port   = 3000
     to_port     = 3000
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
@@ -83,6 +83,6 @@ resource "aws_instance" "ec2_instance" {
               echo '{
 	            "credsStore": "ecr-login"
               }' > ~/.docker/config.json
-              sudo docker run 644107485976.dkr.ecr.us-east-1.amazonaws.com/nodeapp:latest
+              sudo docker run -p 3000:3000 644107485976.dkr.ecr.us-east-1.amazonaws.com/nodeapp:latest
               EOF
 }
