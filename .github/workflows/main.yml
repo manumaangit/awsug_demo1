@@ -22,10 +22,6 @@ jobs:
       - name: Git checkout
         uses: actions/checkout@v3    
 
-      - name: Docker Build
-        run: docker build -t nodeapp . 
-        continue-on-error: false
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
@@ -37,15 +33,17 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1.7.0
   
-      - name: Build, tag, and push image to Amazon ECR
+      - name: Build and push image to Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: nodeapp
           IMAGE_TAG: latest
         run: |
+          docker build -t $REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
   deploy:
     runs-on: ubuntu-latest
+    needs: [docker-creation]
     defaults:
       run:
         shell: bash
