@@ -82,6 +82,8 @@ resource "aws_instance" "ec2_instance" {
               sudo apt install amazon-ecr-credential-helper
               mkdir -p /home/ubuntu/.docker
               echo '{"credsStore": "ecr-login"}' > /home/ubuntu/.docker/config.json
+              sudo mkdir -p /root/.docker
+              sudo cp /home/ubuntu/.docker/config.json /root/.docker/config.json
               docker run -p 3000:3000 644107485976.dkr.ecr.us-east-1.amazonaws.com/nodeapp:latest
               EOF
 }
@@ -94,7 +96,7 @@ resource "aws_instance" "ec2_instance" {
 #     user = "ubuntu"
 
 #     # Mention the exact private key name which will be generated 
-#     private_key = aws_key_pair.generated_key.private_key_pem
+#     private_key = tls_private_key.terrafrom_generated_private_key.private_key_pem
 #     timeout     = "4m"
 #   }
 
