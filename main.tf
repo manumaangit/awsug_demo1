@@ -90,7 +90,7 @@ resource "null_resource" "example" {
   provisioner "remote-exec" {
     connection {
     type = "ssh"
-    host = self.public_ip
+    host = aws_instance.ec2_instance.public_ip
     user = "ubuntu"
 
     # Mention the exact private key name which will be generated 
