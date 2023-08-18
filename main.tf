@@ -70,7 +70,7 @@ resource "aws_instance" "ec2_instance" {
 
     # Mention the exact private key name which will be generated 
     private_key = file("aws_keys_pairs.pem")
-    timeout     = "4m"
+    timeout     = "5m"
   }
 
   user_data = <<-EOF
