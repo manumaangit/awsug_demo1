@@ -74,15 +74,9 @@ resource "aws_instance" "ec2_instance" {
   }
 
   user_data = <<-EOF
-            #!/bin/bash
-            sudo apt-get update
-            sudo apt-get install -y docker.io
-            sudo usermod -aG docker ubuntu
-            sudo apt install amazon-ecr-credential-helper
-            mkdir -p ~/.docker
-            echo '{
-	          "credsStore": "ecr-login"
-            }' > ~/.docker/config.json
-            sudo docker run -p 3000:3000 644107485976.dkr.ecr.us-east-1.amazonaws.com/nodeapp:latest
-            EOF
+              #!/bin/bash
+              sudo apt-get update
+              sudo apt-get install -y docker.io
+              sudo usermod -aG docker ubuntu
+              EOF
 }
