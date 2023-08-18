@@ -78,5 +78,7 @@ resource "aws_instance" "ec2_instance" {
               sudo apt-get update
               sudo apt-get install -y docker.io
               sudo usermod -aG docker ubuntu
+              sudo apt install amazon-ecr-credential-helper
+              mkdir -p ~/.docker
               EOF
 }
