@@ -89,10 +89,14 @@ resource "aws_instance" "ec2_instance" {
 resource "null_resource" "example" {
   provisioner "remote-exec" {
     connection {
-      host = aws_instance.ec2_instance.public_dns
-      user = "ubuntu"
-      private_key = file("aws_keys_pairs.pem")
-    }
+    type = "ssh"
+    host = self.public_ip
+    user = "ubuntu"
+
+    # Mention the exact private key name which will be generated 
+    private_key = file("aws_keys_pairs.pem")
+    timeout     = "4m"
+  }
 
     inline = ["echo 'connected!'"]
   }
