@@ -94,7 +94,7 @@ resource "null_resource" "example" {
     user = "ubuntu"
 
     # Mention the exact private key name which will be generated 
-    private_key = file("aws_keys_pairs.pem")
+    private_key = aws_key_pair.generated_key.private_key_pem
     timeout     = "4m"
   }
 
