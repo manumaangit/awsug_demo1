@@ -82,6 +82,20 @@ resource "aws_instance" "ec2_instance" {
               sudo apt install amazon-ecr-credential-helper
               mkdir -p /home/ubuntu/.docker
               echo '{"credsStore": "ecr-login"}' > /home/ubuntu/.docker/config.json
-              sudo docker run -p 3000:3000 644107485976.dkr.ecr.us-east-1.amazonaws.com/nodeapp:latest
+              docker run -p 3000:3000 644107485976.dkr.ecr.us-east-1.amazonaws.com/nodeapp:latest
               EOF
+}
+
+resource "null_resource" "example" {
+  provisioner "remote-exec" {
+    connection {
+      host = aws_instance.ec2_instance.public_dns
+      user = "ubuntu"
+      private_key = file("aws_keys_pairs.pem")
+    }
+
+    inline = ["echo 'connected!'"]
+  }
+
+
 }
