@@ -75,6 +75,7 @@ resource "aws_instance" "ec2_instance" {
 
   user_data = <<-EOF
               #!/bin/bash
+              exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
               sudo apt-get update
               sudo apt-get install -y docker.io
               sudo usermod -aG docker ubuntu
