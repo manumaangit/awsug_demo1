@@ -138,7 +138,7 @@ jobs:
       - name: Set Output
         id: set-ip
         run: |
-          echo "EC2PUBLICIP=$(terraform output ec2_public_ip)" >> "$GITHUB_ENV"
+          echo "EC2PUBLICIP=$(terraform output ec2_public_ip)" >> $GITHUB_ENV
 
   pull-docker-image:
     runs-on: ubuntu-latest
