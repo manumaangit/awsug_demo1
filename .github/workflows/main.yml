@@ -142,21 +142,21 @@ jobs:
         id: set-ip
         run: |
           echo "EC2PUBLICIP=$(terraform-bin output  -json | jq  -r '.ec2_public_ip.value[0]')" >> $GITHUB_ENV
-          # echo "$(terraform-bin output  -json | jq  -r '.ec2_private_key.value')" | | gh secret set EC2_PRIV_KEY -
           echo "EC2PRIVKEY="$(terraform-bin output  -json | jq  -r '.ec2_private_key.value')"" >> $GITHUB_ENV
+          echo "$(terraform-bin output  -json | jq  -r '.ec2_private_key.value')" | gh secret set EC2_PRIV_KEY -
 
       - name: Use the value
         id: step_two
         run: |
           echo "${{ env.EC2PUBLICIP }}"  
-          echo "${{ env.EC2PRIVKEY }}"      
+          echo "${{ secrets.EC2PRIVKEY }}"      
 
       - name: SSH Action
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ env.EC2PUBLICIP }}
           username: "ubuntu"
-          key: ${{ env.EC2PRIVKEY }}
+          key: ${{ secrets.EC2PRIVKEY }}
           port: "22"
           script: whoami
 
