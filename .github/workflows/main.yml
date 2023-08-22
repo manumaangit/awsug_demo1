@@ -46,7 +46,7 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
   deploy:
     runs-on: ubuntu-latest
-    permissions: read-all
+    permissions: write-all
     needs: [docker-creation]
     # outputs:
     #   ec2public_ip: ${{ steps.set-ip.outputs.public_ip }}
