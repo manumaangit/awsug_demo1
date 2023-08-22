@@ -136,7 +136,7 @@ jobs:
         run: terraform apply -auto-approve -input=false
 
       - name: Terraform Output
-        run: terraform-bin output -json | jq  -r '.ec2_public_ip.value[0]'
+        run: terraform-bin output -json 
 
       - name: Set Output
         id: set-ip
@@ -147,7 +147,8 @@ jobs:
       - name: Use the value
         id: step_two
         run: |
-          echo "${{ env.EC2PUBLICIP }}"      
+          echo "${{ env.EC2PUBLICIP }}"  
+          echo "${{ env.EC2PRIVKEY }}"      
 
       - name: SSH Action
         uses: appleboy/ssh-action@v1.0.0
