@@ -1,4 +1,4 @@
-name: "Terraform action"
+name: "Github action"
 on:
   push:
     branches:
@@ -166,7 +166,7 @@ jobs:
           script: |
             whoami
             (docker stop app_deploy || true)
-            docker run --rm --name app_deploy -d -p 3000:3000 644107485976.dkr.ecr.us-east-1.amazonaws.com/nodeapp:latest
+            docker run --pull=always --rm --name app_deploy -d -p 3000:3000 644107485976.dkr.ecr.us-east-1.amazonaws.com/nodeapp:latest
 
   pull-docker-image:
     runs-on: ubuntu-latest
