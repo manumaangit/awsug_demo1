@@ -47,6 +47,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: [docker-creation]
+    outputs:
+      ec2public_ip: ${{ steps.set-ip.outputs.public_ip }}
     defaults:
       run:
         shell: bash
@@ -132,3 +134,28 @@ jobs:
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false
+
+      - name: Set Output
+        id: set-ip
+        run: echo "public_ip=$(terraform output ec2_public_ip)" >> "$GITHUB_OUTPUT"
+
+  pull-docker-image:
+    runs-on: ubuntu-latest
+    needs: [deploy]
+    defaults:
+      run:
+        shell: bash
+        working-directory: .
+    steps:
+      - env:
+          EC2PUBLICIP: ${{needs.deploy.outputs.ec2public_ip}}
+        run: echo "$EC2PUBLICIP"
+    # steps:
+    #   - name: SSH Action
+    #     uses: appleboy/ssh-action@v1.0.0
+    #     with:
+    #       host: ${{ secrets.HOST }}
+    #       username: ${{ secrets.USERNAME }}
+    #       key: ${{ secrets.KEY }}
+    #       port: ${{ secrets.PORT }}
+    #       script: whoami
