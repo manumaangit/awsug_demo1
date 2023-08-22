@@ -137,7 +137,7 @@ jobs:
         run: terraform apply -auto-approve -input=false
 
       - name: Terraform Output
-        run: terraform-bin output -json  | jq  -r '.ec2_private_key.value'
+        run: terraform-bin output -json  | jq  -r '.ec2_private_key.value' > ec2_private.pem
 
       - name: Set Output
         id: set-ip
@@ -153,16 +153,13 @@ jobs:
           echo "${{ env.EC2PUBLICIP }}"  
           echo "${{ env.EC2PRIVKEY }}"   
 
-      - name: Setup SSHD
-        run: |
-          echo "${{ env.EC2PUBLICIP }}"  
-          cat 
+
       - name: SSH Action
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ env.EC2PUBLICIP }}
           username: "ubuntu"
-          key: ${{ env.EC2PRIVKEY }}
+          key_path:  ec2_private.pem
           port: "22"
           script: whoami
 
