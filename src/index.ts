@@ -11,8 +11,8 @@ const server = http.createServer((req, res) => {
                 <title>Button Page</title>
             </head>
             <body>
-                <button>Buy 5 day</button>
-                <button>Buy 8 days</button>
+                <button>Buy 10 day</button>
+                <button>Buy 20 days</button>
             </body>
             </html>
         `);
