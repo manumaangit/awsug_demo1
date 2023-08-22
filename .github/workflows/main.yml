@@ -163,7 +163,7 @@ jobs:
           port: "22"
           script: |
             whoami
-            docker run --rm --name app_deploy -p 3000:3000 644107485976.dkr.ecr.us-east-1.amazonaws.com/nodeapp:latest 
+            docker run --rm --name app_deploy -p 3000:3000 644107485976.dkr.ecr.us-east-1.amazonaws.com/nodeapp:latest &
 
   pull-docker-image:
     runs-on: ubuntu-latest
