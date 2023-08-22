@@ -135,6 +135,9 @@ jobs:
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false
 
+      - name: Terraform Output
+        run: terraform output ec2_public_ip
+
       - name: Set Output
         id: set-ip
         run: |
