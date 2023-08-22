@@ -84,7 +84,7 @@ resource "aws_instance" "ec2_instance" {
               echo '{"credsStore": "ecr-login"}' > /home/ubuntu/.docker/config.json
               sudo mkdir -p /root/.docker
               sudo cp /home/ubuntu/.docker/config.json /root/.docker/config.json
-              docker run -p 3000:3000 644107485976.dkr.ecr.us-east-1.amazonaws.com/nodeapp:latest
+              docker run --name app_deploy -p 3000:3000 644107485976.dkr.ecr.us-east-1.amazonaws.com/nodeapp:latest
               EOF
 }
 
