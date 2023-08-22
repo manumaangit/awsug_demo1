@@ -151,7 +151,7 @@ jobs:
         id: step_two
         run: |
           echo "${{ env.EC2PUBLICIP }}"  
-          echo "${{ secrets.EC2PRIVKEY }}"      
+          echo "${{ env.EC2PRIVKEY }}"      
 
       - name: SSH Action
         uses: appleboy/ssh-action@v1.0.0
