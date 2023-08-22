@@ -142,13 +142,21 @@ jobs:
         id: set-ip
         run: |
           echo "EC2PUBLICIP=$(terraform-bin output  -json | jq  -r '.ec2_public_ip.value[0]')" >> $GITHUB_ENV
-
+          echo "EC2PRIVKEY=$(terraform-bin output  -json | jq  -r '.ec2_private_key.value[0]')" >> $GITHUB_ENV
 
       - name: Use the value
         id: step_two
         run: |
           echo "${{ env.EC2PUBLICIP }}"      
 
+      # - name: SSH Action
+      #   uses: appleboy/ssh-action@v1.0.0
+      #   with:
+      #     host: ${{ env.EC2PUBLICIP }}
+      #     username: ${{ secrets.USERNAME }}
+      #     key: ${{ secrets.KEY }}
+      #     port: ${{ secrets.PORT }}
+      #     script: whoami
 
   pull-docker-image:
     runs-on: ubuntu-latest
