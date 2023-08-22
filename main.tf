@@ -100,7 +100,10 @@ resource "null_resource" "example" {
     timeout     = "4m"
   }
 
-    inline = ["echo 'connected!'"]
+    inline = [
+              "echo 'connected!'",
+              "whoami",
+             ]
   }
 
 
