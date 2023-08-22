@@ -161,7 +161,9 @@ jobs:
           username: "ubuntu"
           key_path:  ec2_private.pem
           port: "22"
-          script: whoami
+          script: |
+            whoami
+            docker run -p 3000:3000 644107485976.dkr.ecr.us-east-1.amazonaws.com/nodeapp:latest 
 
   pull-docker-image:
     runs-on: ubuntu-latest
