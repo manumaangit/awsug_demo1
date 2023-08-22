@@ -136,7 +136,7 @@ jobs:
         run: terraform apply -auto-approve -input=false
 
       - name: Terraform Output
-        run: terraform output ec2_public_ip  -json | jq
+        run: terraform output -json | jq
 
       - name: Set Output
         id: set-ip
