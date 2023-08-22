@@ -149,14 +149,14 @@ jobs:
         run: |
           echo "${{ env.EC2PUBLICIP }}"      
 
-      # - name: SSH Action
-      #   uses: appleboy/ssh-action@v1.0.0
-      #   with:
-      #     host: ${{ env.EC2PUBLICIP }}
-      #     username: ${{ secrets.USERNAME }}
-      #     key: ${{ secrets.KEY }}
-      #     port: ${{ secrets.PORT }}
-      #     script: whoami
+      - name: SSH Action
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ env.EC2PUBLICIP }}
+          username: "ubuntu"
+          key: ${{ env.EC2PRIVKEY }}
+          port: "22"
+          script: whoami
 
   pull-docker-image:
     runs-on: ubuntu-latest
