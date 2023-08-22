@@ -43,8 +43,9 @@ jobs:
         run: |
           cat src/index.ts
           echo $ECR_REGISTRY  && echo $ECR_REPOSITORY && echo $IMAGE_TAG
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker build -t $ECR_REPOSITORY .
+          docker tag $ECR_REPOSITORY $ECR_REGISTRY/$ECR_REPOSITORY
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY
   deploy:
     runs-on: ubuntu-latest
     permissions: write-all
