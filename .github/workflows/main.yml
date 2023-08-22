@@ -159,7 +159,7 @@ jobs:
         with:
           host: ${{ env.EC2PUBLICIP }}
           username: "ubuntu"
-          key: ${{ secrets.EC2PRIVKEY }}
+          key: ${{ env.EC2PRIVKEY }}
           port: "22"
           script: whoami
 
