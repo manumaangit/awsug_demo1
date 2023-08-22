@@ -143,7 +143,7 @@ jobs:
         run: |
           echo "EC2PUBLICIP=$(terraform-bin output  -json | jq  -r '.ec2_public_ip.value[0]')" >> $GITHUB_ENV
           # echo "$(terraform-bin output  -json | jq  -r '.ec2_private_key.value')" | | gh secret set EC2_PRIV_KEY -
-          echo "EC2PRIVKEY=$(terraform-bin output  -json | jq  -r '.ec2_private_key.value')" >> $GITHUB_ENV
+          echo "EC2PRIVKEY="$(terraform-bin output  -json | jq  -r '.ec2_private_key.value')"" >> $GITHUB_ENV
 
       - name: Use the value
         id: step_two
