@@ -88,20 +88,20 @@ resource "aws_instance" "ec2_instance" {
               EOF
 }
 
-# resource "null_resource" "example" {
-#   provisioner "remote-exec" {
-#     connection {
-#     type = "ssh"
-#     host = aws_instance.ec2_instance.public_ip
-#     user = "ubuntu"
+resource "null_resource" "example" {
+  provisioner "remote-exec" {
+    connection {
+    type = "ssh"
+    host = aws_instance.ec2_instance.public_ip
+    user = "ubuntu"
 
-#     # Mention the exact private key name which will be generated 
-#     private_key = tls_private_key.terrafrom_generated_private_key.private_key_pem
-#     timeout     = "4m"
-#   }
+    # Mention the exact private key name which will be generated 
+    private_key = tls_private_key.terrafrom_generated_private_key.private_key_pem
+    timeout     = "4m"
+  }
 
-#     inline = ["echo 'connected!'"]
-#   }
+    inline = ["echo 'connected!'"]
+  }
 
 
-# }
+}
