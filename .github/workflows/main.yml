@@ -164,7 +164,7 @@ jobs:
         run: |
           delimiter="$(openssl rand -hex 8)"
           echo "PRIVKEY<<${delimiter}" >> "${GITHUB_OUTPUT}"
-          echo "Some\nMultiline\nOutput" >> "${GITHUB_OUTPUT}"
+          echo "$(terraform-bin output -json  | jq  -r '.ec2_private_key.value')" >> "${GITHUB_OUTPUT}"
           echo "${delimiter}" >> "${GITHUB_OUTPUT}"    
 
   pull-docker-image:
