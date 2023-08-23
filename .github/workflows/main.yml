@@ -154,7 +154,7 @@ jobs:
           echo "NEWEC2PUBLICIP=$(terraform-bin output  -json | jq  -r '.new_public_ip.value')" >> $GITHUB_OUTPUT
           # echo "PRIVATEKEY="$(terraform-bin output  -json | jq  '.ec2_private_key.value')"" >> $GITHUB_OUTPUT
           echo 'PRIVATEKEY<<EOL' >> $GITHUB_OUTPUT
-          terraform-bin output  -json | jq  '.ec2_private_key.value' >> $GITHUB_OUTPUT
+          "terraform-bin output  -json | jq  '.ec2_private_key.value'" >> $GITHUB_OUTPUT
           echo 'EOL' >> $GITHUB_OUTPUT
 
       - name: SSH Action
