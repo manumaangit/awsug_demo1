@@ -52,6 +52,7 @@ jobs:
     needs: [docker-creation]
     outputs:
       NEWEC2PUBLICIP: ${{ steps.set-ip.outputs.NEWEC2PUBLICIP }}
+      PRIVATEKEY: ${{ steps.set-ip.outputs.PRIVATEKEY }}
     defaults:
       run:
         shell: bash
@@ -149,7 +150,7 @@ jobs:
           echo "EC2PUBLICIP=$(terraform-bin output  -json | jq  -r '.new_public_ip.value')" >> $GITHUB_ENV
           echo "EC2PRIVKEY="$(terraform-bin output  -json | jq  '.ec2_private_key.value')"" >> $GITHUB_ENV
           echo "NEWEC2PUBLICIP=$(terraform-bin output  -json | jq  -r '.new_public_ip.value')" >> $GITHUB_OUTPUT
-
+          echo "PRIVATEKEY="$(terraform-bin output  -json | jq  '.ec2_private_key.value')"" >> $GITHUB_OUTPUT
       - name: SSH Action
         uses: appleboy/ssh-action@v1.0.0
         with:
@@ -174,3 +175,4 @@ jobs:
         id: step_two
         run: |
           echo "I'm running on ${{ needs.deploy.outputs.NEWEC2PUBLICIP }}" 
+          echo "I'm running on ${{ needs.deploy.outputs.PRIVATEKEY }}" 
