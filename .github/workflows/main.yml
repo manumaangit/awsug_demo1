@@ -180,8 +180,8 @@ jobs:
         run: |
           echo "I'm running on ${{ needs.deploy.outputs.NEWEC2PUBLICIP }}" 
           #echo "${{ needs.deploy.outputs.PRIVATEKEY }}" > ec2_private.pem
-          #echo "${{ needs.deploy.outputs.PRIVKEY }}"
-          echo "${{ needs.deploy.outputs.PRIVKEY }}" > ec2_private.pem
+          echo "${{ needs.deploy.outputs.PRIVKEY }}"
+          #echo "${{ needs.deploy.outputs.PRIVKEY }}" > ec2_private.pem
 
       - name: SSH Action
         uses: appleboy/ssh-action@v1.0.0
