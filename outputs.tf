@@ -8,3 +8,8 @@ output "ec2_private_key" {
   sensitive = true
   value       = tls_private_key.terrafrom_generated_private_key.private_key_pem
 }
+
+output "new_public_ip" {
+  description = "New Public IP"
+  value = data.aws_instance.new_instance.public_ip
+}
