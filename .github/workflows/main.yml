@@ -146,7 +146,7 @@ jobs:
           cat ec2_private.pem
 
       - name: Set privatekey to var
-        uses: actions/github-script@v4
+        uses: actions/github-script@v6
         id: privatekey
         with:
           script: |
@@ -191,5 +191,5 @@ jobs:
           script: |
             whoami
             (docker stop app_deploy || true)
-            (docker images -a | grep none | awk '{ print $3; }' | xargs docker rmi --force || true  )
+            (docker rmi $(docker images --filter "dangling=true" -q --no-trunc)  )
             docker run --pull=always --rm --name app_deploy -d -p 3000:3000 644107485976.dkr.ecr.us-east-1.amazonaws.com/nodeapp:latest
