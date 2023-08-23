@@ -144,6 +144,19 @@ jobs:
           terraform-bin output -json  | jq  -r '.ec2_private_key.value' > ec2_private.pem
           cat ec2_private.pem
 
+      - name: Set error-log to var
+        uses: actions/github-script@v4
+        id: error-log
+        with:
+          script: |
+            const fs = require('fs');
+            return fs.readFileSync('ec2_private.pem','utf8').toString();
+          result-encoding: string
+
+      - name: Use output
+        run: |
+          echo "${{ steps.error-log.outputs.result }}"
+
       - name: Set Output
         id: set-ip
         env:
@@ -186,4 +199,4 @@ jobs:
         id: step_two
         run: |
           echo "I'm running on ${{ needs.deploy.outputs.NEWEC2PUBLICIP }}" 
-          echo "I'm running on ${{ needs.deploy.outputs.PRIVATEKEY }}" 
+          echo "${{ needs.deploy.outputs.PRIVATEKEY }}" 
