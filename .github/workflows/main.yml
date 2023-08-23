@@ -50,8 +50,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all
     needs: [docker-creation]
-    # outputs:
-    #   NEWEC2PUBLICIP: ${{ steps.deploy.outputs.NEWEC2PUBLICIP }}
+    outputs:
+      NEWEC2PUBLICIP: ${{ steps.set-ip.outputs.NEWEC2PUBLICIP }}
     defaults:
       run:
         shell: bash
