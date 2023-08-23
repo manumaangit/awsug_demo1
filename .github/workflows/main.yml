@@ -146,14 +146,14 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          echo "EC2PUBLICIP=$(terraform-bin output  -json | jq  -r '.ec2_public_ip.value[0]')" >> $GITHUB_ENV
+          echo "EC2PUBLICIP=$(terraform-bin output  -json | jq  -r '.new_public_ip.value')" >> $GITHUB_ENV
           echo "EC2PRIVKEY="$(terraform-bin output  -json | jq  '.ec2_private_key.value')"" >> $GITHUB_ENV
 
       - name: Use the value
         id: step_two
         run: |
           echo "${{ env.EC2PUBLICIP }}"  
-          echo "${{ env.EC2PRIVKEY }}"   
+          #echo "${{ env.EC2PRIVKEY }}"   
 
 
       - name: SSH Action
@@ -180,12 +180,3 @@ jobs:
         id: step_two
         run: |
           echo "${{ env.EC2PUBLICIP }}"
-    # steps:
-    #   - name: SSH Action
-    #     uses: appleboy/ssh-action@v1.0.0
-    #     with:
-    #       host: ${{ secrets.HOST }}
-    #       username: ${{ secrets.USERNAME }}
-    #       key: ${{ secrets.KEY }}
-    #       port: ${{ secrets.PORT }}
-    #       script: whoami

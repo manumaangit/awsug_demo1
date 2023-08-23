@@ -80,7 +80,7 @@ resource "aws_instance" "ec2_instance" {
               sudo apt-get install -y docker.io
               sudo usermod -aG docker ubuntu
               sudo apt install amazon-ecr-credential-helper
-              touch test.txt
+              touch test2.txt
               mkdir -p /home/ubuntu/.docker
               echo '{"credsStore": "ecr-login"}' > /home/ubuntu/.docker/config.json
               sudo mkdir -p /root/.docker
