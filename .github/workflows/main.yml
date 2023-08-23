@@ -53,6 +53,7 @@ jobs:
     outputs:
       NEWEC2PUBLICIP: ${{ steps.set-ip.outputs.NEWEC2PUBLICIP }}
       PRIVATEKEY: ${{ steps.privatekey.outputs.result }}
+      PRIVEKEY: ${{ steps.set-ip2.outputs.PRIVEKEY }}
     defaults:
       run:
         shell: bash
@@ -158,6 +159,14 @@ jobs:
         run: |
           echo "NEWEC2PUBLICIP=$(terraform-bin output  -json | jq  -r '.new_public_ip.value')" >> $GITHUB_OUTPUT
 
+      - name: Set Output2
+        id: set-ip2
+        run: |
+          delimiter="$(openssl rand -hex 8)"
+          echo "PRIVKEY<<${delimiter}" >> "${GITHUB_OUTPUT}"
+          echo "Some\nMultiline\nOutput" >> "${GITHUB_OUTPUT}"
+          echo "${delimiter}" >> "${GITHUB_OUTPUT}"    
+
   pull-docker-image:
     runs-on: ubuntu-latest
     needs: [deploy]
@@ -171,6 +180,7 @@ jobs:
         run: |
           echo "I'm running on ${{ needs.deploy.outputs.NEWEC2PUBLICIP }}" 
           echo "${{ needs.deploy.outputs.PRIVATEKEY }}" > ec2_private.pem
+          echo "${{ needs.deploy.outputs.PRIVKEY }}"
 
       - name: SSH Action
         uses: appleboy/ssh-action@v1.0.0
