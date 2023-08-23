@@ -152,7 +152,11 @@ jobs:
           echo "EC2PUBLICIP=$(terraform-bin output  -json | jq  -r '.new_public_ip.value')" >> $GITHUB_ENV
           echo "EC2PRIVKEY="$(terraform-bin output  -json | jq  '.ec2_private_key.value')"" >> $GITHUB_ENV
           echo "NEWEC2PUBLICIP=$(terraform-bin output  -json | jq  -r '.new_public_ip.value')" >> $GITHUB_OUTPUT
-          echo "PRIVATEKEY="$(terraform-bin output  -json | jq  '.ec2_private_key.value')"" >> $GITHUB_OUTPUT
+          # echo "PRIVATEKEY="$(terraform-bin output  -json | jq  '.ec2_private_key.value')"" >> $GITHUB_OUTPUT
+          echo 'PRIVATEKEY<<EOF' >> $GITHUB_OUTPUT
+          terraform-bin output  -json | jq  '.ec2_private_key.value' >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
+          
       - name: SSH Action
         uses: appleboy/ssh-action@v1.0.0
         with:
