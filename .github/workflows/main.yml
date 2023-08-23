@@ -153,29 +153,10 @@ jobs:
             return fs.readFileSync('ec2_private.pem','utf8').toString();
           result-encoding: string
 
-      - name: Use output
-        run: |
-          echo "${{ steps.privatekey.outputs.result }}"
-
       - name: Set Output
         id: set-ip
-        env:
-          GH_TOKEN: ${{ github.token }}
         run: |
-          echo "EC2PUBLICIP=$(terraform-bin output  -json | jq  -r '.new_public_ip.value')" >> $GITHUB_ENV
-          echo "EC2PRIVKEY="$(terraform-bin output  -json | jq  '.ec2_private_key.value')"" >> $GITHUB_ENV
           echo "NEWEC2PUBLICIP=$(terraform-bin output  -json | jq  -r '.new_public_ip.value')" >> $GITHUB_OUTPUT
-          # echo "PRIVATEKEY="$(terraform-bin output  -json | jq  '.ec2_private_key.value')"" >> $GITHUB_OUTPUT
-          PRIVATEKEY_TEXT="$(terraform-bin output  -json | jq  '.ec2_private_key.value')"
-          PRIVATEKEY_TEXT="${PRIVATEKEY_TEXT//'%'/'%25'}"
-          PRIVATEKEY_TEXT="${PRIVATEKEY_TEXT//$'\n'/'%0A'}"
-          PRIVATEKEY_TEXT="${PRIVATEKEY_TEXT//$'\r'/'%0D'}"
-
-          echo 'PRIVATEKEY<<EOF' >> $GITHUB_OUTPUT
-          echo "$PRIVATEKEY_TEXT" >> $GITHUB_OUTPUT
-          echo 'EOF' >> $GITHUB_OUTPUT
-
-
 
   pull-docker-image:
     runs-on: ubuntu-latest
