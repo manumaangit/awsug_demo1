@@ -175,17 +175,7 @@ jobs:
           echo "$PRIVATEKEY_TEXT" >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
 
-      - name: SSH Action
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ env.EC2PUBLICIP }}
-          username: "ubuntu"
-          key_path:  ec2_private.pem
-          port: "22"
-          script: |
-            whoami
-            (docker stop app_deploy || true)
-            docker run --pull=always --rm --name app_deploy -d -p 3000:3000 644107485976.dkr.ecr.us-east-1.amazonaws.com/nodeapp:latest
+
 
   pull-docker-image:
     runs-on: ubuntu-latest
@@ -196,7 +186,19 @@ jobs:
         working-directory: .
     steps:
       - name: Use the value
-        id: step_two
+        id: use_value
         run: |
           echo "I'm running on ${{ needs.deploy.outputs.NEWEC2PUBLICIP }}" 
-          echo "${{ needs.deploy.outputs.PRIVATEKEY }}" 
+          echo "${{ needs.deploy.outputs.PRIVATEKEY }}" > ec2_private.pem
+
+      - name: SSH Action
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ needs.deploy.outputs.NEWEC2PUBLICIP }}
+          username: "ubuntu"
+          key_path:  ec2_private.pem
+          port: "22"
+          script: |
+            whoami
+            (docker stop app_deploy || true)
+            docker run --pull=always --rm --name app_deploy -d -p 3000:3000 644107485976.dkr.ecr.us-east-1.amazonaws.com/nodeapp:latest
