@@ -52,7 +52,7 @@ jobs:
     needs: [docker-creation]
     outputs:
       NEWEC2PUBLICIP: ${{ steps.set-ip.outputs.NEWEC2PUBLICIP }}
-      PRIVATEKEY: ${{ steps.set-ip.outputs.PRIVATEKEY }}
+      PRIVATEKEY: ${{ steps.privatekey.outputs.result }}
     defaults:
       run:
         shell: bash
@@ -144,9 +144,9 @@ jobs:
           terraform-bin output -json  | jq  -r '.ec2_private_key.value' > ec2_private.pem
           cat ec2_private.pem
 
-      - name: Set error-log to var
+      - name: Set privatekey to var
         uses: actions/github-script@v4
-        id: error-log
+        id: privatekey
         with:
           script: |
             const fs = require('fs');
@@ -155,7 +155,7 @@ jobs:
 
       - name: Use output
         run: |
-          echo "${{ steps.error-log.outputs.result }}"
+          echo "${{ steps.privatekey.outputs.result }}"
 
       - name: Set Output
         id: set-ip
