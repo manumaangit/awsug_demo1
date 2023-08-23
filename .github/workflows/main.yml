@@ -140,7 +140,9 @@ jobs:
         run: terraform apply -auto-approve -input=false
 
       - name: Terraform Output
-        run: terraform-bin output -json  | jq  -r '.ec2_private_key.value' > ec2_private.pem
+        run: |
+          terraform-bin output -json  | jq  -r '.ec2_private_key.value' > ec2_private.pem
+          cat ec2_private.pem
 
       - name: Set Output
         id: set-ip
