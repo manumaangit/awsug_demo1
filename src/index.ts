@@ -12,7 +12,7 @@ const server = http.createServer((req, res) => {
             </head>
             <body>
                 <button>Buy 1 day</button>
-                <button>Buy 2 days</button>
+                <button>Buy 3 days</button>
             </body>
             </html>
         `);
