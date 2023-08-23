@@ -53,7 +53,7 @@ jobs:
     outputs:
       NEWEC2PUBLICIP: ${{ steps.set-ip.outputs.NEWEC2PUBLICIP }}
       PRIVATEKEY: ${{ steps.privatekey.outputs.result }}
-      PRIVEKEY: ${{ steps.set-ip2.outputs.PRIVEKEY }}
+      PRIVEKEY: ${{ steps.set-ip2.outputs.PRIVKEY }}
     defaults:
       run:
         shell: bash
