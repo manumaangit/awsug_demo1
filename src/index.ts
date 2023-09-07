@@ -8,9 +8,12 @@ const server = http.createServer((req, res) => {
             <!DOCTYPE html>
             <html>
             <head>
-                <title>Button Page</title>
+                <title>Sample NODE Page</title>
             </head>
             <body>
+                <h1>Hello World</h1>
+                <p>${uc.upperCase("Hello World")}</p>
+                    
                 <button>Buy 1 day</button>
                 <button>Buy 4 days</button>
             </body>
