@@ -15,7 +15,7 @@ const server = http.createServer((req, res) => {
                 <p>${uc.upperCase("Hello World")}</p>
                     
                 <button>Buy 1 day</button>
-                <button>Buy 4 days</button>
+                <button>Buy 2 days</button>
             </body>
             </html>
         `);
